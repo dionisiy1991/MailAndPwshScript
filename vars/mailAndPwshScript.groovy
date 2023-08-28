@@ -1,11 +1,14 @@
 properties ([
     parameters ([
-        string(defaultValue: '',description: '', name: 'Mail'),
-        string(defaultValue: '',description: '', name: 'Text')
+        string(defaultValue: '',description: '', name: 'number1'),
+        string(defaultValue: '',description: '', name: 'number2')
     ])
 ])
 node ( "master") {
-    stage {
-        emailext body: 'ttt', subject: '${params.Text}', to: '${params.Mail}'
+    stage ("Checkout") {
+        checkout scm
+    }
+    stage ("Run script") {
+        powershell "${pwd()}/Lesson1.ps1 -num1 '${params.number1}' -num2 '${params.number2}'"
     }
 }
